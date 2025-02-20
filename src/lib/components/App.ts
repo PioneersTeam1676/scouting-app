@@ -1,7 +1,71 @@
+import Group from "./Group";
+import Input from "./Input";
 import InputPage from "./InputPage";
 
 export default class App {
 
-    pages: InputPage[];
+    public activePage: number;
+    public pages: InputPage[];
+
+    constructor(pages: InputPage[]) {
+        InputPage.app = this;
+
+        this.pages = pages;
+        this.activePage = 0;
+        this.pages[this.activePage].setVisible(true);
+
+    }
+
+    nextPage() {
+        this.activePage++;
+
+        if(this.activePage >= this.pages.length) {
+            this.submitForm();
+        } else {
+            this.pages[this.activePage-1].setVisible(false);
+            this.pages[this.activePage].setVisible(true)
+        }
+
+    }
+
+    submitForm() {
+
+    }
+
+    updateInputs(fn: (input: Input) => void) {
+
+        for(let page of this.pages) {
+
+            for(let section of page.sections) {
+
+                for(let element of section.elements) {
+
+                    if(element instanceof Group) {
+                        for(let input of element.inputs) {
+                            fn(input);
+                        }
+                    } else {
+                        fn(element);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    resetInputs() {
+
+        this.updateInputs((input) => {
+            input.value = input.defaultValue;
+        })
+
+    }
+
+    resetForm() {
+        
+    }
 
 }

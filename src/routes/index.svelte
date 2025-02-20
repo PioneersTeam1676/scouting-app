@@ -1,6 +1,10 @@
 <script lang="ts">
   // code here
 
+    import HelpButton from "$lib/components/HelpButton.svelte";
+import InputSection from "$lib/components/InputSection.svelte";
+    import { InputGroup, InputGroupText } from "sveltestrap";
+
   const app = {
     "header-left": [
       {
@@ -60,6 +64,9 @@
 
 <ion-content fullscreen="true" class="ion-padding">
   <div class="main-content">
+
+
+
 
   </div>
 </ion-content>

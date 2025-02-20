@@ -1,6 +1,11 @@
 <script lang=ts>
-    import InputSection from "./InputSection";
+    import Group from "./Group";
+    import GroupComp from "./Group.svelte";
 
+    import HelpButton from "./HelpButton.svelte";
+    import Input from "./Input";
+    import InputSection from "./InputSection";
+    import GenericInput from "./GenericInput.svelte";
 
     export let section: InputSection;
 
@@ -12,10 +17,24 @@
     <h1>{section.header}</h1>
 
     {#if section.helpText != ""}
-        
+        <HelpButton msg={section.helpText}/>
     {/if}
 
     <hr/>
+
+    {#each section.elements as item}
+        
+        {#if item instanceof Input}
+
+        <GenericInput input={item}/>
+
+        {:else if item instanceof Group}
+
+            <GroupComp group={item}/>
+
+        {/if}
+
+    {/each}
 
 
 
@@ -35,12 +54,12 @@
         margin-right: 0.06rem;
     }
 
-    .page-visible {
+    .section-visible {
         display: block;
         opacity: 1;
     }
     
-    .page-invisible {
+    .section-invisible {
         display: none;
         opacity: 0;
     }

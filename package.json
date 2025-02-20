@@ -28,7 +28,8 @@
     "vite-plugin-pwa": "^0.12.3"
   },
   "dependencies": {
-    "@ionic/core": "^6.1.8"
+    "@ionic/core": "^6.1.8",
+    "sveltestrap": "^5.11.3"
   },
   "routify": {
     "pages": "./src/routes"
