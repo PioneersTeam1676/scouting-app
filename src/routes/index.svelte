@@ -1,18 +1,58 @@
 <script lang="ts">
-  // code here
+  import HelpButton from "$lib/components/HelpButton.svelte";
+  import { InputGroup, InputGroupText } from "sveltestrap";
 
-    import HelpButton from "$lib/components/HelpButton.svelte";
-import InputSection from "$lib/components/InputSection.svelte";
-    import { InputGroup, InputGroupText } from "sveltestrap";
 
-  const app = {
-    "header-left": [
-      {
-        text: "Match",
-        id: "match-num"
-      }
-    ]
+  import App from "$lib/components/App";
+  import Group from "$lib/components/Group";
+  import Input from "$lib/components/Input";
+  import InputPage from "$lib/components/InputPage";
+  import InputSection from "$lib/components/InputSection";
+
+  /*
+  const app = new App([]);
+
+
+  //create the app here
+
+
+
+  function submitForm() {
+
+    //json obj to store data
+    let data: { [key: string]: any } = {};
+
+    //go through all the pages in the app
+    app.pages.forEach(page => {
+
+      //for each page, go through each section inside
+      page.sections.forEach(section => {
+
+        //for each section, go through each element inside (each can either be a group or an input)
+        section.elements.forEach(element => {
+
+          //if its a group, go through each input inside
+          if (element instanceof Group) {
+            (element as Group).inputs.forEach(input => {
+              data[input.id] = input.value;//use css id (.id) as header, and .value as value
+            });
+          } else if (element instanceof Input) {
+            data[(element as Input).id] = (element as Input).value;
+          }
+
+        });
+
+      });
+      
+    });
+
+    console.log(data);
+
   }
+*/
+
+
+
 
 </script>
 
@@ -64,7 +104,10 @@ import InputSection from "$lib/components/InputSection.svelte";
 
 <ion-content fullscreen="true" class="ion-padding">
   <div class="main-content">
-
+    
+    
+    
+    <!-- <button on:click={submitForm}>Submit</button> -->
 
 
 
