@@ -1,4 +1,3 @@
-import { StartStopNotifier } from "svelte/store";
 import App from "./App";
 import InputSection from "./InputSection";
 

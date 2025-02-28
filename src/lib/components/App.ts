@@ -6,21 +6,23 @@ export default class App {
 
     public activePage: number;
     public pages: InputPage[];
+    public uid: number;
 
     constructor(pages: InputPage[]) {
         InputPage.app = this;
 
         this.pages = pages;
-        this.activePage = 0;
-        this.pages[this.activePage].setVisible(true);
+        this.activePage = -1;
 
     }
 
     nextPage() {
-        this.activePage++;
+        this.activePage += 1;
 
         if(this.activePage >= this.pages.length) {
             this.submitForm();
+        } else if(this.activePage == 0) {
+            this.pages[this.activePage].setVisible(true);
         } else {
             this.pages[this.activePage-1].setVisible(false);
             this.pages[this.activePage].setVisible(true)

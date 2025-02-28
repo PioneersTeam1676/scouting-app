@@ -17,7 +17,7 @@ import NumberInput from "./NumberInput";
             {/if}
             {input.helpText}
         </InputGroupText>
-        <Input type="number" bind:value={input.value}/>
+        <Input type="number" bind:value={input.value} max={input.max} min={input.min}/>
         
     </InputGroup>
 </div>

@@ -8,4 +8,11 @@ export default class InputSection {
     helpText: string;
     visible: boolean = false;
 
+    constructor(header: string, helpText: string) {
+        this.header = header;
+        this.helpText = helpText;
+        this.elements = [];
+        this.visible = false;
+    }
+
 }
