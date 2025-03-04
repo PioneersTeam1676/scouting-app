@@ -7,6 +7,7 @@ export default class App {
     public activePage: number;
     public pages: InputPage[];
     public uid: number;
+    public url: string;
 
     constructor(pages: InputPage[]) {
         InputPage.app = this;
@@ -30,7 +31,62 @@ export default class App {
 
     }
 
-    submitForm() {
+    async submitForm() {
+
+        //json obj to store data
+        let data: { [key: string]: any } = {};
+
+        //go through all the pages in the app
+        this.pages.forEach(page => {
+
+            //for each page, go through each section inside
+            page.sections.forEach(section => {
+
+            //for each section, go through each element inside (each can either be a group or an input)
+            section.elements.forEach(element => {
+
+                //if its a group, go through each input inside
+                if (element instanceof Group) {
+                (element as Group).inputs.forEach(input => {
+                    data[input.id] = input.value;//use css id (.id) as header, and .value as value
+                });
+                } else if (element instanceof Input) {
+                    data[(element as Input).id] = (element as Input).value;
+                }
+
+            });
+
+            });
+            
+        });
+
+        console.log(data);
+
+        data = { submission: data, uid: this.uid };
+        console.log(data);
+
+        //save data to localstorage
+        localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
+
+        const response = await fetch(`${this.url}/api/form/${this.uid}`, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => {
+
+            console.log("Form submitted successfully");
+            console.log(res)//this doesn't work or smth idek its just not returnign the right thing but whatever it doesnt even matter. 
+
+        }, (error) => {
+            console.error("Error submittdfing form", error);
+        });
+
+
+
+
 
     }
 

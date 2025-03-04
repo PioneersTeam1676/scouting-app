@@ -67,7 +67,7 @@
 
 }
 
-  const url = "https://special-rotary-phone-74xgqj4x9xq3rrpx-5173.app.github.dev";
+  const url = "https://sturdy-space-goldfish-7467w9j4pg93xj6q-5173.app.github.dev";
 
   async function getActiveForm(): Promise<number> {
 
@@ -96,6 +96,7 @@
 
     const activeForm = await getActiveForm();
     app.uid = activeForm;
+    app.url = url;
 
     let pages: {
       footer_buttons: string,
