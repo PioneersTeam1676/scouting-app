@@ -182,11 +182,22 @@
     }
 
     app.nextPage();
+    app.isOffline = false;
     app.activePage = app.activePage;
   
 
-
   })
+
+
+
+  window.addEventListener("offline", () => {
+    app.isOffline = true;
+  });
+  window.addEventListener("online", () => {
+    app.isOffline = false;
+  });
+
+
 
 </script>
 
@@ -228,7 +239,8 @@
       </div>
       <div class="header-item" style="display:flex; gap: 0.5rem;">
             <span class="blink"></span>
-          <span class="header-item-text-val" style="color: #2f9c4e;">Connected</span>
+            <!-- if isOffline then say so, otherwise, say so -->
+          <span class="header-item-text-val" style="color: #2f9c4e;">{(app.isOffline) ? "Offline" : "Online"}</span>
 
       </div>
   </div>

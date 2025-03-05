@@ -8,23 +8,28 @@ export default class App {
     public pages: InputPage[];
     public uid: number;
     public url: string;
+    public isOffline: boolean;
 
     constructor(pages: InputPage[]) {
         InputPage.app = this;
 
         this.pages = pages;
         this.activePage = -1;
-
+        this.url = "";
+        this.isOffline = false;
     }
 
     nextPage() {
         this.activePage += 1;
 
         if(this.activePage >= this.pages.length) {
+            console.log("next page form submission")
             this.submitForm();
         } else if(this.activePage == 0) {
+            console.log("first page")
             this.pages[this.activePage].setVisible(true);
         } else {
+            console.log("next page")
             this.pages[this.activePage-1].setVisible(false);
             this.pages[this.activePage].setVisible(true)
         }
@@ -32,6 +37,7 @@ export default class App {
     }
 
     async submitForm() {
+        console.log("submit forlaskdfjm")
 
         //json obj to store data
         let data: { [key: string]: any } = {};
@@ -65,28 +71,48 @@ export default class App {
         data = { submission: data, uid: this.uid };
         console.log(data);
 
+                // /*
+
         //save data to localstorage
-        localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
+        let localName = 'match'+localStorage.length;
+        localStorage.setItem(localName, JSON.stringify(data));
+        console.log("saved to localstorage");
 
-        const response = await fetch(`${this.url}/api/form/${this.uid}`, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        }).then((res) => {
+        //post if online
+        if (!this.isOffline) {
 
-            console.log("Form submitted successfully");
-            console.log(res)//this doesn't work or smth idek its just not returnign the right thing but whatever it doesnt even matter. 
+            
+            while (localStorage.length > 0) {
+                
+                let matchName = localStorage.key(0);
+                let matchData = localStorage.getItem(matchName);
 
-        }, (error) => {
-            console.error("Error submittdfing form", error);
-        });
+                const response = await fetch(`${this.url}/api/form/${this.uid}`, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: matchData,
+                }).then((res) => {
+    
+                    // console.log("Form submitted successfully");
+                    // console.log(res)//this doesn't work or smth idek its just not returnign the right thing but whatever it doesnt even matter. 
+                    // console.log(matchData)
+                    // console.log(localStorage.length)
+                    
+                    localStorage.removeItem(matchName);
+                    // console.log(localStorage.length)
+
+                }, (error) => {
+                    console.error("Error submittdfing form", error);
+                });
+            }
+
+        }
 
 
-
-
+        // */
 
     }
 
