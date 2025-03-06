@@ -67,23 +67,25 @@
 
 }
 
-  const url = "https://sturdy-space-goldfish-7467w9j4pg93xj6q-5173.app.github.dev";
+  const url = "https://special-rotary-phone-74xgqj4x9xq3rrpx-5173.app.github.dev";
 
-  async function getActiveForm(): Promise<number> {
+  app.url = url;
+
+  async function getActiveForm(): Promise<any> {
 
     let req = await fetch(`${url}/api/form/active`, {
       method: "GET",
       cache: 'no-cache',
       headers: {
                 'Content-Type': 'application/json'
-            }
+            },
     });
 
     let res = await req.json();
 
     if(Array.isArray(res)) {
       if(res.length == 1) {
-        return res[0].uid;
+        return res[0];
       } 
     }
 
@@ -95,7 +97,7 @@
     // get the active form
 
     const activeForm = await getActiveForm();
-    app.uid = activeForm;
+    app.uid = activeForm.uid;
     app.url = url;
 
     let pages: {
@@ -113,10 +115,11 @@
 
       let sections: InputSection[] = [];
 
-      let sectionNames = page.section_help_texts.split(",");
+      let sectionNames = page.section_names.split(",");
       let sectionHelpTexts = page.section_help_texts.split(",");
 
-      for(let i = 0; i < sectionNames.length;i++) {
+      for(let i = 0; i < sectionNames.length; i++) {
+
         sections.push(new InputSection(sectionNames[i], sectionHelpTexts[i]));
       }
 
@@ -168,7 +171,10 @@
 
           let group = groups.find((val) => val.uid == inputFromDB.group_id);
           group.inputs.push(input);
-          sections[inputFromDB.section_index].elements.push(group);
+
+          if(!sections[inputFromDB.section_index].elements.includes(group)) {
+            sections[inputFromDB.section_index].elements.push(group);
+          }
 
         } else {
           sections[inputFromDB.section_index].elements.push(input);
@@ -218,9 +224,7 @@
     </div>
 
     <div class="header-item">
-      <span class="header-item-text-val" style="color: red;">RED</span>
-      -
-      <span class="header-item-text-val">CLOSE</span>
+      <span class="header-item-text-val" style="color: #ffcc00;">PASCACK PIONEERS</span>
     </div>
 
   </div>
@@ -252,9 +256,8 @@
   <div class="main-content">
 
     {#each app.pages as page}
-    <p>hi</p>
       
-      <InputPageComp page={page}/>
+      <InputPageComp bind:page={page}/>
 
     {/each}
 

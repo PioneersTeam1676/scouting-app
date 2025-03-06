@@ -25,27 +25,39 @@ import Group from "./Group";
     
 
 </script>
-        
-        {#if input instanceof ToggleInput}
 
-            <ToggleInputComp input={input}/>
+<div class="generic-input">
 
-        {:else if input instanceof TextInput}
+    
+    {#if input instanceof ToggleInput}
+    
+    <ToggleInputComp input={input}/>
+    
+    {:else if input instanceof TextInput}
+    
+    <TextInputComp input={input}/>
+    
+    {:else if input instanceof NumberInput}
+    
+    <NumberInputComp input={input}/>
+    
+    {:else if input instanceof IncrementalNumberInput}
+    
+    <IncrementalNumberInputComp input={input}></IncrementalNumberInputComp>
+    
+    {:else if input instanceof PillBoxInput}
+    
+    <PillBoxInputComp input={input}/>
+    
+    {/if}
 
-            <TextInputComp input={input}/>
+    
+    
+</div>
 
-        {:else if input instanceof NumberInput}
+<style>
 
-            <NumberInputComp input={input}/>
-        
-        {:else if input instanceof IncrementalNumberInput}
-
-            <IncrementalNumberInputComp input={input}></IncrementalNumberInputComp>
-
-        {:else if input instanceof PillBoxInput}
-
-            <PillBoxInputComp input={input}/>
-
-        {/if}
-
-        
+    .generic-input {
+        margin-bottom: 1rem;
+    }
+</style>

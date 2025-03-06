@@ -48,12 +48,13 @@
         margin-bottom: 0rem;
     }
     .group-container {
-        display: flex;
+        display: grid;
         justify-content: space-between;
+        grid-template-columns: 40% 60%;
     }
     .group-image {
-        width: 7.8125rem;
-        height: 7.8125rem;
+        width: 8rem;
+        height: 8rem;
         margin: auto auto;
         box-sizing: border-box;
         border-radius: 0.3125rem;

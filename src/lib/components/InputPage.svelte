@@ -2,10 +2,18 @@
     import InputPage from "./InputPage";
     import InputSection from "./InputSection.svelte";
     import { InputPageButton } from "./InputPage"
-    import { Button } from "sveltestrap";
+    import { Button, Input } from "sveltestrap";
 
 
     export let page: InputPage;
+
+    let visible = page.isVisible();
+
+    page.visible.subscribe((bool) => {
+        visible = bool;
+        console.log(bool);
+        page.sections = page.sections;
+    })
 
 </script>
 
@@ -14,8 +22,7 @@
     <InputSection section={section}></InputSection>
 
 {/each}
-
-<div class="section {page.isVisible() ? "section-visible" : "section-invisible"}">
+<div class="section {visible ? "section-visible" : "section-invisible"}">
 
     <div class="button-container">
 
@@ -23,15 +30,15 @@
             
             {#if button == InputPageButton.submit}
                 
-                <Button color="success" on:click={() => {InputPage.app.submitForm()}}>Submit</Button>
+                <Button color="success" on:click={() => {InputPage.app.submitForm(); InputPage.app = InputPage.app}}>Submit</Button>
 
             {:else if button == InputPageButton.cancel}
 
-                <Button color="danger" on:click={() => {InputPage.app.resetForm()}}>Cancel</Button>
+                <Button color="danger" on:click={() => {InputPage.app.resetForm(); InputPage.app = InputPage.app}}>Cancel</Button>
 
             {:else if button == InputPageButton.next}
 
-                <Button color="success" on:click={() => {InputPage.app.nextPage()}}>Next</Button>
+                <Button color="success" on:click={() => {InputPage.app.nextPage(); InputPage.app.activePage = InputPage.app.activePage;}}>Next</Button>
 
             {/if}
 
@@ -67,6 +74,7 @@
     .button-container {
         display: flex;
         justify-content: center;
+        gap: 0.5rem;
     }
 
 </style>
