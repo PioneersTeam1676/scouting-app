@@ -61,6 +61,7 @@ export default defineConfig({
     VitePWA({
       manifest: pwaManifest,
       includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'assets/*'],
+      injectRegister: 'auto'
     }),
 
     svelte(),
