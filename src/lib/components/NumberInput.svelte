@@ -11,11 +11,11 @@ import NumberInput from "./NumberInput";
 <div>
     <InputGroup>
         
-        <InputGroupText>
+        <InputGroupText type="number">
             {#if input.helpText != ""}
             <HelpButton msg={input.helpText}/>
             {/if}
-            {input.helpText}
+            {input.questionText}
         </InputGroupText>
         <Input type="number" bind:value={input.value} max={input.max} min={input.min}/>
         

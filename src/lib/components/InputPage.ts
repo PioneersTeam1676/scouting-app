@@ -1,3 +1,4 @@
+import { get, type Writable, writable } from "svelte/store";
 import App from "./App";
 import InputSection from "./InputSection";
 
@@ -18,6 +19,7 @@ export default class InputPage {
     public footerText: string;
     public footerHelpText: string;
     public name: string;
+    public visible: Writable<boolean>;
 
     constructor(sections: InputSection[], buttons: InputPageButton[], footerText: string, footerHelpText: string, name: string) {
         this.sections = sections;
@@ -25,21 +27,20 @@ export default class InputPage {
         this.buttons = buttons;
         this.footerText = footerText;
         this.footerHelpText = footerHelpText;
+        this.visible = writable(false);
     }
 
-    setVisible(visble: boolean) {
+    setVisible(visible: boolean) {
+        this.visible.set(visible);
+
         for(let section of this.sections) {
-
-            section.visible = visble;
-
+            section.visible = visible;
         }
+
     }
 
     isVisible(): boolean {
-        for(let section of this.sections) {
-            return section.visible;
-        }
-
+        return get(this.visible);
     }
 
     goToNextPage() {

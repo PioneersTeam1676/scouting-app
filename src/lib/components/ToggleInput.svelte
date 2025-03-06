@@ -13,9 +13,9 @@
 
     <Input color="dark" bsSize="lg" type="switch" label={input.questionText} bind:value={input.value}/>
 
-    {#if input.questionText != ""}
+    {#if input.helpText != ""}
             
-        <HelpButton msg={input.questionText}/>
+        <HelpButton msg={input.helpText}/>
     {/if}
 
 
@@ -24,7 +24,8 @@
 
 <style>
     .toggle-input-container {
-        display: block;
-        padding-left: 2.5rem;
+        display: flex;
+        /* padding-left: 2.5rem; */
+        align-items: center;
     }
 </style>

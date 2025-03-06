@@ -71,10 +71,10 @@ export default class App {
         const response = await fetch(`${this.url}/api/form/${this.uid}`, {
             method: "POST",
             mode: "no-cors",
+            body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            }
         }).then((res) => {
 
             console.log("Form submitted successfully");
@@ -83,10 +83,6 @@ export default class App {
         }, (error) => {
             console.error("Error submittdfing form", error);
         });
-
-
-
-
 
     }
 
