@@ -25,10 +25,11 @@
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
     "vite": "^3.0.2",
-    "vite-plugin-pwa": "^0.12.3"
+    "vite-plugin-pwa": "^0.12.8"
   },
   "dependencies": {
     "@ionic/core": "^6.1.8",
+    "generate-service-worker": "^2.0.5",
     "sveltestrap": "^5.11.3"
   },
   "routify": {

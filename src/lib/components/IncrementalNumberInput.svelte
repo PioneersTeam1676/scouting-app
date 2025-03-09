@@ -19,10 +19,10 @@ import IncrementalNumberInput from "./IncrementalNumberInput";
 
     </InputGroupText>
 
-    <Button color="danger" on:click={() => {input.decrement()}}>-</Button>
+    <Button color="danger" on:click={() => {input.decrement(); input = input}} disabled={input.value == input.min}>-</Button>
   
-    <Input type="number" bind:value={input.value}/>
+    <Input type="number" bind:value={input.value} max={input.max} min={input.min}/>
     
-    <Button color="success" on:click={() => {input.increment()}}>+</Button>
+    <Button color="success" on:click={() => {input.increment(); input = input}} disabled={input.value == input.max}>+</Button>
 
 </InputGroup>

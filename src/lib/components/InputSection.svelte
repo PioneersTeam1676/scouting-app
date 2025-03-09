@@ -14,23 +14,25 @@
 
 <div class="section {section.visible ? "section-visible" : "section-invisible"}">
 
-    <h1>{section.header}</h1>
+    <span class="section-header"><span class="section-header-text">{section.header}</span>
 
-    {#if section.helpText != ""}
+        {#if section.helpText != ""}
         <HelpButton msg={section.helpText}/>
-    {/if}
+        {/if}
+    </span>
 
-    <hr/>
+    <hr color="white"/>
 
     {#each section.elements as item}
         
         {#if item instanceof Input}
 
-        <GenericInput input={item}/>
+        <GenericInput bind:input={item}/>
+
 
         {:else if item instanceof Group}
 
-            <GroupComp group={item}/>
+            <GroupComp bind:group={item}/>
 
         {/if}
 
@@ -62,6 +64,25 @@
     .section-invisible {
         display: none;
         opacity: 0;
+    }
+
+    .section-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin: 1rem
+    }
+
+    hr {
+        width: 100%;
+    }
+
+    .section-header-text {
+        font-size: x-large;
+        font-weight: bold;
+        text-align: center;
     }
 
 </style>
