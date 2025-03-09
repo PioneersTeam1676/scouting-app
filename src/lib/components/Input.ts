@@ -7,6 +7,7 @@ export default abstract class Input {
     id: string;
     value: any;
     uid: number;
+    type: string;
 
     constructor(required: boolean, questionText: string, helpText: string, defaultValue: any, id: string, uid: number) {
         this.required = required;

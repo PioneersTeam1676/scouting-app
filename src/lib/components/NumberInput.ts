@@ -4,13 +4,16 @@ export default class NumberInput extends Input {
 
     declare defaultValue: number;
     declare value: number;
+    declare type: string;
     max: number;
     min: number;
+    
 
     constructor(required: boolean, questionText: string, helpText: string, defaultValue: number, id: string, uid: number, min: number, max: number) {
         super(required, questionText, helpText, defaultValue, id, uid);
         this.min = min;
         this.max = max;
+        this.type = "number";
     }
     
 }

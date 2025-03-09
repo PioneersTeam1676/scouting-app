@@ -14,18 +14,9 @@
     import TextInput from "$lib/components/TextInput";
     import ToggleInput from "$lib/components/ToggleInput";
     import { onMount } from "svelte";
-    import { InputGroup, InputGroupText } from "sveltestrap";
+    import { InputGroup, InputGroupText, Modal } from "sveltestrap";
     import { InputPageButton } from "$lib/components/InputPage";
     import InputPageComp from "$lib/components/InputPage.svelte";
-
-  // const app = {
-  //   "header-left": [
-  //     {
-  //       text: "Match",
-  //       id: "match-num"
-  //     }
-  //   ]
-  // }
 
   type InputFromDB = {
     uid:                 number;
@@ -49,56 +40,100 @@
     num_increment:       number;
 }
 
-  let app = new App([]);
+
+async function request(path: string, method: string, body?: string): Promise<any> {
   
-  async function request(path: string, method: string, body?: string): Promise<any> {
-
-      let req = await fetch(path, {
-          method, 
-          body: body,
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-
-      let res = await req.json();
-
-      return res;
-
+  let req = await fetch(path, {
+    method, 
+    body: body,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  
+  let res = await req.json();
+  
+  return res;
+  
+}
+async function getActiveForm(): Promise<any> {
+  
+  let req = await fetch(`${url}/api/form/active`, {
+    method: "GET",
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  });
+  
+  let res = await req.json();
+  
+  if(Array.isArray(res)) {
+    if(res.length == 1) {
+      return res[0];
+    } 
+  }
+  
+  return -1;
 }
 
+  let app = new App([]);
   const url = "https://special-rotary-phone-74xgqj4x9xq3rrpx-5173.app.github.dev";
 
   app.url = url;
 
-  async function getActiveForm(): Promise<any> {
+  let users: { uid: number, dash_id: number, name: string, img: string }[] = [];
+  let activeUser: {uid: number, dash_id: number, name: string, img: string} = {uid: -1, dash_id: -1, name: "...", img: "placeholder.jpg"}
 
-    let req = await fetch(`${url}/api/form/active`, {
-      method: "GET",
-      cache: 'no-cache',
-      headers: {
-                'Content-Type': 'application/json'
-            },
-    });
-
-    let res = await req.json();
-
-    if(Array.isArray(res)) {
-      if(res.length == 1) {
-        return res[0];
-      } 
-    }
-
-    return -1;
+  if(localStorage.getItem("users") == null) {
+    localStorage.setItem("users", JSON.stringify(users));
   }
 
+  // auto updates the user id in the local storage whenever it changes
+  $:{
+    if(typeof app.userId == "number") {
+      localStorage.setItem("user-id", app.userId + "");
+      activeUser = users.find((val) => val.dash_id == app.userId);
+      app.userName = activeUser.name;
+    }
+  }
+
+  
+
   onMount(async () => {
+
+    // update the users
+
+    if(navigator.onLine) {
+      let req = await request(`${url}/api/user/active`, "GET");
+      
+      if(req[0]?.dash_id != undefined) {
+        users = req;
+        localStorage.setItem("users", JSON.stringify(users));
+      } 
+    }
+    
+    users = JSON.parse(localStorage.getItem("users"));
 
     // get the active form
 
     const activeForm = await getActiveForm();
     app.uid = activeForm.uid;
     app.url = url;
+    app.headerDisplay = (activeForm.inputs_on_header as string).split(",").map((val) => Number.parseInt(val));
+    console.log(app.headerDisplay);
+    app.version = activeForm.version;
+    app.csvOrder = activeForm.csv_order.split(",");
+
+    if(activeForm?.version != undefined && localStorage.getItem(App.APP_STORAGE_LOCATION) != null && (app.version <= JSON.parse(localStorage.getItem(App.APP_STORAGE_LOCATION)).version)) {
+
+      app = App.readFromLocalStorage();
+      app.setHeaderDisplays(app.headerDisplay);
+
+      console.log("loading from local storage")
+    } else {
+
+      console.log("loading from database")
 
     let pages: {
       footer_buttons: string,
@@ -109,7 +144,7 @@
       section_help_texts: string,
       section_names: string,
       uid: number
-    }[] = await request(`${url}/api/page?form_id=${activeForm}`, "GET");
+    }[] = await request(`${url}/api/page?form_id=${activeForm.uid}`, "GET");
 
     for(let page of pages) {
 
@@ -187,12 +222,25 @@
 
     }
 
-    app.nextPage();
-    app.isOffline = false;
-    app.activePage = app.activePage;
-  
+  }
 
-  })
+
+  app.isOffline = false;
+  app.activePage = app.activePage;
+  app.setHeaderDisplays(app.headerDisplay);
+  if(localStorage.getItem("user-id") != undefined) {
+    app.userId = Number.parseInt(localStorage.getItem("user-id"));
+  }
+  InputPage.app = app;
+  app.nextPage();
+
+
+    console.log(users);
+
+
+    localStorage.setItem(App.APP_STORAGE_LOCATION, JSON.stringify(app));
+
+  });
 
 
 
@@ -202,6 +250,13 @@
   window.addEventListener("online", () => {
     app.isOffline = false;
   });
+
+  let open = false;
+  const toggle = () => {
+
+    if(app.activePage == 0) open = !open;
+
+  };
 
 
 
@@ -214,37 +269,38 @@
     <!-- left side of header - TODO: add ability to make this side customizable and update with input update -->
   <div slot="start" class="view-left">
     <div class="header-item">
-      <span class="header-item-text-desc">Match #</span>
-      <span class="header-item-text-val">1</span>
+      <span class="header-item-text-desc">{app.headerInputs[0]?.questionText || "Loading..."}</span>
+      <span class="header-item-text-val">{app.headerInputs[0]?.value != undefined ? app.headerInputs[0].value : ""}</span>
     </div>
 
     <div class="header-item">
-      <span class="header-item-text-desc">Team #</span>
-      <span class="header-item-text-val">1676</span>
+      <span class="header-item-text-desc">{app.headerInputs[1]?.questionText || "Loading..."}</span>
+      <span class="header-item-text-val">{app.headerInputs[1]?.value != undefined ? app.headerInputs[1].value : ""}</span>
     </div>
 
     <div class="header-item">
-      <span class="header-item-text-val" style="color: #ffcc00;">PASCACK PIONEERS</span>
+      <span class="header-item-text-val" style="color: #ffcc00;">{app.uid == undefined ? "Loading Form..." : `v${app.uid}.${app.version}`}</span>
     </div>
 
   </div>
   
   <!-- center of header -->
-  <div class="pfp-container"> <img src="https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg" alt="profile" class="pfp-image"/> </div>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="pfp-container" on:click={toggle}> <img src="https://team1676.com/dash/img/profiles/100/{activeUser.img}" alt="profile" class="pfp-image"/> </div>
   
 
   <!-- right of header -->
   <div slot="end">
       <div class="header-item">
-        <span class="header-item-text-val">Dylan Barrett</span>
+        <span class="header-item-text-val">{activeUser.name}</span>
       </div>
       <div class="header-item">
-        <span class="header-item-text-val">uid-1808</span>
+        <span class="header-item-text-val">uid-{activeUser.dash_id}</span>
       </div>
       <div class="header-item" style="display:flex; gap: 0.5rem;">
-            <span class="blink"></span>
+            <span class="blink" style="{app.isOffline ? "background-color: #f56c6c;" : ""}"></span>
             <!-- if isOffline then say so, otherwise, say so -->
-          <span class="header-item-text-val" style="color: #2f9c4e;">{(app.isOffline) ? "Offline" : "Online"}</span>
+          <span class="header-item-text-val" style="color:{app.isOffline ? " #f56c6c" : " #2f9c4e"};">{(app.isOffline) ? "Offline" : "Online"}</span>
 
       </div>
   </div>
@@ -252,7 +308,37 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" class="ion-padding">
+<ion-content fullscreen="true" class="ion-padding gears">
+
+  <Modal body header="Sign In" isOpen={open} {toggle} size="lg" keyboard={false}>
+
+    {#await users}
+
+      <p>Loading users...</p>
+      
+    {:then users} 
+
+    <div class="users">
+
+      
+      {#each users as user}
+      
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div class="user-item {user.dash_id == app.userId ? "active-user" : ""}" on:click={() => {app.userId = user.dash_id; InputPage.app = app}}>
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <img src="https://team1676.com/dash/img/profiles/100/{user.img}"/>
+        <p>{user.name} - <span style="font-weight: bolder;">{user.dash_id}</span></p>
+      </div>
+      
+      {/each}
+    </div>
+      
+    {/await}
+
+
+  </Modal>
+
+
   <div class="main-content">
 
     {#each app.pages as page}
@@ -272,6 +358,36 @@
     font-family: sans-serif;
   }
 
+  .users {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.25rem;
+  }
+
+  .user-item {
+    border-width: 0.1rem;
+    border-color: #ffcc00;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+  
+  .active-user {
+    background-color: rgba(5, 5, 5, 0.5);
+  }
+
+  .user-item > p {
+    margin: 0px;
+  }
+
+  .user-item > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
   /* HEADER STYLES */
 
   .header-item {
@@ -289,6 +405,10 @@
   ion-toolbar > *:last-child {
     margin-right: 1rem;
   } 
+
+  .view-left {
+    min-width: 6.5rem;
+  }
   
   .header-item-text-desc {
     font-size: 1rem;
@@ -339,6 +459,10 @@
     padding: 0.75rem;
     width: 100%;
     max-width: 50rem;
+  }
+
+  ion-content {
+    --background: #212529 url("assets/gears.jpg") repeat center center / cover;
   }
 
   

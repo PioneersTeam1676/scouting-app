@@ -3,7 +3,6 @@
 import NumberInput from "./NumberInput";
     import HelpButton from "./HelpButton.svelte";
 
-
     export let input: NumberInput;
 
 </script>

@@ -3,7 +3,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 import routify from '@roxi/routify/vite-plugin'
 import { VitePWA } from 'vite-plugin-pwa'
 import { resolve } from 'path'
-import { readFileSync } from 'fs'
 
 const pwaManifest = {
   name: 'Ionic Svelte',

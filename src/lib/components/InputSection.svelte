@@ -27,12 +27,12 @@
         
         {#if item instanceof Input}
 
-        <GenericInput input={item}/>
+        <GenericInput bind:input={item}/>
 
 
         {:else if item instanceof Group}
 
-            <GroupComp group={item}/>
+            <GroupComp bind:group={item}/>
 
         {/if}
 

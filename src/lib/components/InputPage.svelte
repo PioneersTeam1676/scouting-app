@@ -19,7 +19,7 @@
 
 {#each page.sections as section}
 
-    <InputSection section={section}></InputSection>
+    <InputSection bind:section={section}></InputSection>
 
 {/each}
 <div class="section {visible ? "section-visible" : "section-invisible"}">
@@ -38,7 +38,7 @@
 
             {:else if button == InputPageButton.next}
 
-                <Button color="success" on:click={() => {InputPage.app.nextPage(); InputPage.app.activePage = InputPage.app.activePage;}}>Next</Button>
+                <Button color="success" on:click={() => {InputPage.app.nextPage(); InputPage.app.activePage = InputPage.app.activePage;}} disabled={InputPage.app.userId == undefined}>Next</Button>
 
             {/if}
 

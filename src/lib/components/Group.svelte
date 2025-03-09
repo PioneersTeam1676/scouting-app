@@ -28,7 +28,7 @@
 
             {#each group.inputs as input}
                 
-                <GenericInput input={input}/>
+                <GenericInput bind:input={input}/>
 
             {/each}
 

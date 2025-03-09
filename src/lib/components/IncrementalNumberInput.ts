@@ -4,6 +4,7 @@ export default class IncrementalNumberInput extends Input {
 
     declare defaultValue: number;
     declare value: number;
+    declare type: string;
     min: number;
     max: number;
 
@@ -11,6 +12,7 @@ export default class IncrementalNumberInput extends Input {
         super(required, questionText, helpText, parseInt(defaultValue as unknown as string), id, uid);
         this.min = min;
         this.max = max;
+        this.type = "incremental"
     }
 
     public increment(amount: number = 1) {

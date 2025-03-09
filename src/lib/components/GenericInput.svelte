@@ -31,23 +31,23 @@ import Group from "./Group";
     
     {#if input instanceof ToggleInput}
     
-    <ToggleInputComp input={input}/>
+    <ToggleInputComp bind:input={input}/>
     
     {:else if input instanceof TextInput}
     
-    <TextInputComp input={input}/>
+    <TextInputComp bind:input={input}/>
     
     {:else if input instanceof NumberInput}
     
-    <NumberInputComp input={input}/>
+    <NumberInputComp bind:input={input}/>
     
     {:else if input instanceof IncrementalNumberInput}
     
-    <IncrementalNumberInputComp input={input}></IncrementalNumberInputComp>
+    <IncrementalNumberInputComp bind:input={input}></IncrementalNumberInputComp>
     
     {:else if input instanceof PillBoxInput}
     
-    <PillBoxInputComp input={input}/>
+    <PillBoxInputComp bind:input={input}/>
     
     {/if}
 

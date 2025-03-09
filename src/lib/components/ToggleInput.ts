@@ -4,6 +4,7 @@ export default class ToggleInput extends Input {
 
     declare defaultValue: boolean;
     declare value: boolean;
+    declare type: string;
 
     constructor(required: boolean, questionText: string, helpText: string, defaultValue: boolean, id: string, uid: number) {
 
@@ -13,6 +14,7 @@ export default class ToggleInput extends Input {
         }
 
         super(required, questionText, helpText, defaultValue, id, uid);
+        this.type = "toggle";
     }
 
     toggle() {
