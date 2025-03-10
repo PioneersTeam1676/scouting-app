@@ -10,8 +10,8 @@ import TextInput from "./TextInput";
 
 <InputGroup size="sm">
     <InputGroupText>
-        {#if input.questionText != ""}
-            <HelpButton msg={input.questionText}/>
+        {#if input.helpText != ""}
+            <HelpButton msg={input.helpText}/>
         {/if}
         {input.questionText}</InputGroupText>
     <Input bind:value={input.value}/>

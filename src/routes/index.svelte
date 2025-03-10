@@ -287,7 +287,7 @@ async function getActiveForm(): Promise<any> {
   
   <!-- center of header -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="pfp-container" on:click={toggle}> <img src="https://team1676.com/dash/img/profiles/100/{activeUser.img}" alt="profile" class="pfp-image"/> </div>
+  <div class="pfp-container" on:click={toggle}> <img src="/img/profiles/100/{activeUser.img}" alt="profile" class="pfp-image"/> </div>
   
 
   <!-- right of header -->
@@ -327,7 +327,7 @@ async function getActiveForm(): Promise<any> {
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="user-item {user.dash_id == app.userId ? "active-user" : ""}" on:click={() => {app.userId = user.dash_id; InputPage.app = app}}>
         <!-- svelte-ignore a11y-missing-attribute -->
-        <img src="https://team1676.com/dash/img/profiles/100/{user.img}"/>
+        <img src="/img/profiles/100/{user.img}"/>
         <p>{user.name} - <span style="font-weight: bolder;">{user.dash_id}</span></p>
       </div>
       

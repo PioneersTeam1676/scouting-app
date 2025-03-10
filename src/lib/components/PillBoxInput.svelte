@@ -6,6 +6,7 @@
 
     export let input: PillBoxInput;
 
+
 </script>
 
 <span>{input.questionText} <span style="font-size: x-small;">(Select one)</span>
@@ -19,7 +20,7 @@
 <ListGroup horizontal={input.orientation == 0}>
     
     {#each input.options as option, i}
-        <ListGroupItem color="dark" tag="button" active={input.value == i} value={input.values[i]} on:click={() => {input.updateValue(i)}}>{option}</ListGroupItem>
+        <ListGroupItem color="dark" tag="button" active={input.value == i} value={input.values[i]} on:click={() => {input.updateValue(i); input = input}}>{option}</ListGroupItem>
     {/each}
 
 </ListGroup>

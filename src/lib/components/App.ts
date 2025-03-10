@@ -80,6 +80,7 @@ export default class App {
     public userId: number;
     public csvOrder: string[]
     public userName: string;
+    private submitting: boolean;
 
     constructor(pages: InputPage[]) {
         InputPage.app = this;
@@ -89,6 +90,7 @@ export default class App {
         this.url = "";
         this.isOffline = false;
         this.headerInputs = [];
+        this.submitting = false;
     }
 
     nextPage() {
@@ -119,6 +121,12 @@ export default class App {
 
     async submitForm() {
 
+        if(this.submitting) {
+            return;
+        }
+
+        this.submitting = true;
+
         //json obj to store data
         let data: { [key: string]: any } = {};
 
@@ -147,11 +155,17 @@ export default class App {
         // });
 
         let err = false;
+        let submitted = -1;
 
         this.updateInputs((input) => {
 
             if(input.value == "undefined" || input.value == undefined) {
                 err = true;
+            }
+
+            if(input.type == "toggle") {
+                console.log("toggle!")
+                console.log(input.value);
             }
 
             if(input.type == "pillbox") {
@@ -164,6 +178,7 @@ export default class App {
         });
 
         if(err){
+            console.log("err!");
             const options = {
                 header: 'Error Submitting!',
             //    subHeader: 'Subtitle',
@@ -171,6 +186,7 @@ export default class App {
                 buttons: ['OK']
             };
       
+            this.submitting = false;
             return this.showAlert(options);
         }
         
@@ -201,6 +217,7 @@ export default class App {
 
         // save data to localstorage
 
+        submitted = localStorage.length;
         localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
 
         const response = await fetch(`${this.url}/api/form/${this.uid}`, {
@@ -210,17 +227,18 @@ export default class App {
             headers: {
               "Content-Type": "application/json",
             }
-        }).then((res) => {
+        }).then(async (res) => {
 
             console.log("Form submitted successfully");
-            console.log(res)//this doesn't work or smth idek its just not returnign the right thing but whatever it doesnt even matter. 
+            console.log(await res.json())//this doesn't work or smth idek its just not returnign the right thing but whatever it doesnt even matter. 
+            // submitted = true;
 
         }, (error) => {
             console.error("Error submittdfing form", error);
         });
 
         let localName = 'match'+localStorage.length;
-        localStorage.setItem(localName, JSON.stringify(data));
+        // localStorage.setItem(localName, JSON.stringify(data));
         console.log("saved to localstorage");
 
 
@@ -233,10 +251,15 @@ export default class App {
                 let matchName = localStorage.key(i);
                 let matchData = localStorage.getItem(matchName);
 
-                if(matchName.indexOf("form") <= -1 || !matchName.includes("match")) {
+                if(matchName.indexOf("form") <= -1 && !matchName.includes("match")) {
                     continue;
                 }
 
+                
+                if(matchName.includes(submitted + "")) {
+                    localStorage.removeItem(matchName);
+                    continue;
+                }
                 console.log("removing " + matchName + matchName.indexOf("form"));
 
                 const response = await fetch(`${this.url}/api/form/${this.uid}`, {
@@ -273,6 +296,8 @@ export default class App {
         };
          
         this.showAlert(options);
+
+        this.submitting = false;
 
 
     }
@@ -343,6 +368,11 @@ export default class App {
     resetInputs() {
 
         this.updateInputs((input) => {
+
+            if(input.type == "pillbox") {
+                input.value = undefined;
+            }
+
             input.value = input.defaultValue;
         })
 

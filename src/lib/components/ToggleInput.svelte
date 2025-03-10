@@ -11,7 +11,7 @@
 <div class="toggle-input-container">
 
 
-    <Input color="dark" bsSize="lg" type="switch" label={input.questionText} bind:value={input.value}/>
+    <Input color="dark" bsSize="lg" type="switch" label={input.questionText} bind:checked={input.value}/>
 
     {#if input.helpText != ""}
             

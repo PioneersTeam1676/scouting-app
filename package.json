@@ -10,7 +10,8 @@
     "build:server": "vite build  --ssr",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "routes": "routify"
+    "routes": "routify",
+    "serve": "npm run build & serve dist/client"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.9",
@@ -30,6 +31,7 @@
   "dependencies": {
     "@ionic/core": "^6.1.8",
     "generate-service-worker": "^2.0.5",
+    "serve": "^14.2.4",
     "sveltestrap": "^5.11.3"
   },
   "routify": {
