@@ -21,6 +21,7 @@ export default class PillBoxInput extends Input {
         this.orientation = orientation;
         this.type = "pillbox";
         this.value = defaultValue;
+        console.log(this.value)
     }
 
     updateValue(index: number) {

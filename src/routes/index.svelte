@@ -78,7 +78,7 @@ async function getActiveForm(): Promise<any> {
 }
 
   let app = new App([]);
-  const url = "https://special-rotary-phone-74xgqj4x9xq3rrpx-5173.app.github.dev";
+  const url = "https://scout-backend.team1676.com";
 
   app.url = url;
 
@@ -280,7 +280,7 @@ async function getActiveForm(): Promise<any> {
     </div>
 
     <div class="header-item">
-      <span class="header-item-text-val" style="color: #ffcc00;">{app.uid == undefined ? "Loading Form..." : `v${app.uid}.${app.version}`}</span>
+      <span class="header-item-text-val" style="color: #ffcc00;">{app.uid == undefined ? "Loading Form..." : `v1.${app.uid}.${app.version}`}</span>
     </div>
 
   </div>

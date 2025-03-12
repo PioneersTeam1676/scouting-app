@@ -13,7 +13,24 @@
         visible = bool;
         console.log(bool);
         page.sections = page.sections;
-    })
+    });
+
+    let disabled = true;
+
+    $: {
+        if(page.isVisible()) {
+        if(InputPage.app.userId == undefined) {
+            disabled = true;
+        } else if(page.hasEmptyInput(page)) {
+            console.log("ive got an emoty thing")
+            disabled = true;
+        } else {
+            disabled = false;
+        }
+
+            console.log(disabled)
+        }
+    }
 
 </script>
 
@@ -30,7 +47,7 @@
             
             {#if button == InputPageButton.submit}
                 
-                <Button color="success" on:click={() => {InputPage.app.submitForm(); InputPage.app = InputPage.app}}>Submit</Button>
+                <Button color="success" on:click={() => {InputPage.app.submitForm(); InputPage.app = InputPage.app}} disabled={disabled}>Submit</Button>
 
             {:else if button == InputPageButton.cancel}
 
@@ -38,7 +55,7 @@
 
             {:else if button == InputPageButton.next}
 
-                <Button color="success" on:click={() => {InputPage.app.nextPage(); InputPage.app.activePage = InputPage.app.activePage;}} disabled={InputPage.app.userId == undefined}>Next</Button>
+                <Button color="success" on:click={() => {InputPage.app.nextPage(); InputPage.app.activePage = InputPage.app.activePage;}} disabled={disabled}>Next</Button>
 
             {/if}
 

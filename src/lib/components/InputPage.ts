@@ -1,6 +1,7 @@
 import { get, type Writable, writable } from "svelte/store";
 import App from "./App";
 import InputSection from "./InputSection";
+import Group from "./Group";
 
 export enum InputPageButton  {
     next = "next",
@@ -45,6 +46,32 @@ export default class InputPage {
 
     goToNextPage() {
         InputPage.app.nextPage();
+    }
+
+    hasEmptyInput(page: InputPage): boolean {
+        for(let section of page.sections) {
+
+            for(let element of section.elements) {
+                
+                if(element instanceof Group) {
+                    
+                    for(let input of element.inputs) {
+                        if(input.value == "" && input.value !== 0 || input.value == "undefined" && input.value !== false) {
+                        // console.log(input.questionText)
+                            return true;
+                        }
+                    }
+
+                } else {
+                    if((element.value == "undefined" || element.value == "") && element.value !== 0 && element.value !== false) {
+                        // console.log(element.questionText)
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 
 }
