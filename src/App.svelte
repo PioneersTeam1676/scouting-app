@@ -8,3 +8,9 @@
 </script>
 
 <Router {router} />
+
+<style>
+  :root {
+    color-scheme: light only;
+  }
+</style>
