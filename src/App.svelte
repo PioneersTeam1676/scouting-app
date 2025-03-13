@@ -11,6 +11,6 @@
 
 <style>
   :root {
-    color-scheme: light only;
+    color-scheme: dark only;
   }
 </style>
