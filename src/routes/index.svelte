@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  const VERSION = 6;
+  const VERSION = 7;
 
     import App from "$lib/components/App";
     import Group from "$lib/components/Group";
@@ -101,7 +101,12 @@ async function getActiveForm(): Promise<any> {
     }
   }
 
-  
+  // auto updates the offline/online
+  $: {
+    app.isOffline = !navigator.onLine;
+  }
+
+  console.log("v5")
 
   onMount(async () => {
 
@@ -120,15 +125,21 @@ async function getActiveForm(): Promise<any> {
 
     // get the active form
 
-    const activeForm = await getActiveForm();
-    app.uid = activeForm.uid;
-    app.url = url;
-    app.headerDisplay = (activeForm.inputs_on_header as string).split(",").map((val) => Number.parseInt(val));
-    console.log(app.headerDisplay);
-    app.version = activeForm.version;
-    app.csvOrder = activeForm.csv_order.split(",");
+    let activeForm = undefined;
 
-    if(activeForm?.version != undefined && localStorage.getItem(App.APP_STORAGE_LOCATION) != null && (app.version <= JSON.parse(localStorage.getItem(App.APP_STORAGE_LOCATION)).version)) {
+    if(navigator.onLine) {
+      activeForm = await getActiveForm();
+      app.uid = activeForm.uid;
+      app.url = url;
+      app.headerDisplay = (activeForm.inputs_on_header as string).split(",").map((val) => Number.parseInt(val));
+      console.log(app.headerDisplay);
+      app.version = activeForm.version;
+      app.csvOrder = activeForm.csv_order.split(",");
+    }
+
+    
+
+    if(activeForm?.version != undefined && localStorage.getItem(App.APP_STORAGE_LOCATION) != null && (app.version <= JSON.parse(localStorage.getItem(App.APP_STORAGE_LOCATION)).version) || !navigator.onLine) {
 
       app = App.readFromLocalStorage();
       app.setHeaderDisplays(app.headerDisplay);
@@ -228,7 +239,7 @@ async function getActiveForm(): Promise<any> {
   }
 
 
-  app.isOffline = false;
+  // app.isOffline = false;
   app.activePage = app.activePage;
   app.setHeaderDisplays(app.headerDisplay);
   if(localStorage.getItem("user-id") != undefined) {

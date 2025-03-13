@@ -5,9 +5,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { resolve } from 'path'
 
 const pwaManifest = {
-  name: 'Ionic Svelte',
-  short_name: 'A really cool app',
-  description: 'Coolness in Vite Svelte and Ionic',
+  name: '1676 Scouting',
+  short_name: 'Scouting',
+  description: 'Team 1676 Scouting App',
   theme_color: '#000000',
   icons: [
     {
@@ -46,7 +46,7 @@ const svelteWebcomponentConfig = {
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    manifest: true,
+    // manifest: true,
   },
   plugins: [
     // @ts-ignore
@@ -61,9 +61,11 @@ export default defineConfig({
       },
     }),
     VitePWA({
+      includeAssets: ['favicon.svg', 'favicon.ico', 'favicon.png','robots.txt', 'assets/*'],
       manifest: pwaManifest,
-      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'assets/*'],
-      injectRegister: 'auto'
+      strategies: 'generateSW',
+      registerType: 'autoUpdate',
+      injectRegister: 'inline',
     }),
 
     svelte(),

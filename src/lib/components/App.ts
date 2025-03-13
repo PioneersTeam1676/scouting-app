@@ -8,6 +8,7 @@ import NumberInput from "./NumberInput";
 import PillBoxInput, { PillBoxOrientation } from "./PillBoxInput";
 import TextInput from "./TextInput";
 import ToggleInput from "./ToggleInput";
+import { set_data_maybe_contenteditable } from "svelte/internal";
 
 type AppFromLocalStorage = {
     activePage: number
@@ -217,8 +218,11 @@ export default class App {
 
         // save data to localstorage
 
-        submitted = localStorage.length;
-        localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
+        if(navigator.onLine) {
+
+
+        // submitted = localStorage.length;
+        // localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
 
         const response = await fetch(`${this.url}/api/form/${this.uid}`, {
             method: "POST",
@@ -237,14 +241,17 @@ export default class App {
             console.error("Error submittdfing form", error);
         });
 
-        let localName = 'match'+localStorage.length;
-        // localStorage.setItem(localName, JSON.stringify(data));
-        console.log("saved to localstorage");
+    } else {
+        console.log("ok so im offline")
+        submitted = localStorage.length;
+        localStorage.setItem('form'+localStorage.length, JSON.stringify(data));
+    }
 
 
         //post if online
         if (!this.isOffline) {
 
+            let itemsToRemove = [];
             
             for(let i = 0; i < localStorage.length; i++) {
                 
@@ -256,10 +263,10 @@ export default class App {
                 }
 
                 
-                if(matchName.includes(submitted + "")) {
-                    localStorage.removeItem(matchName);
-                    continue;
-                }
+                // if(matchName.includes(submitted + "")) {
+                //     localStorage.removeItem(matchName);
+                //     continue;
+                // }
                 console.log("removing " + matchName + matchName.indexOf("form"));
 
                 const response = await fetch(`${this.url}/api/form/${this.uid}`, {
@@ -276,12 +283,17 @@ export default class App {
                     // console.log(matchData)
                     // console.log(localStorage.length)
                     
-                    localStorage.removeItem(matchName);
+                    // localStorage.removeItem(matchName);
+                    itemsToRemove.push(matchName);
                     // console.log(localStorage.length)
 
                 }, (error) => {
                     console.error("Error submittdfing form", error);
                 });
+            }
+
+            for(let i = 0; i < itemsToRemove.length; i++) {
+                localStorage.removeItem(itemsToRemove[i]);
             }
 
         }
@@ -390,13 +402,13 @@ export default class App {
     static readFromLocalStorage(): App {
 
         const json: AppFromLocalStorage = JSON.parse(localStorage.getItem(this.APP_STORAGE_LOCATION));
-
+        
         const app = new App([]);
 
         app.activePage = -1;
         app.uid = json.uid;
         app.url = json.url;
-        app.isOffline = false;
+        app.isOffline = !navigator.onLine;
         app.version = json.version;
         app.headerDisplay = json.headerDisplay;
         app.csvOrder = json.csvOrder;
