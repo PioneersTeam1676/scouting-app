@@ -1,4 +1,7 @@
 <script lang="ts">
+
+  const VERSION = 2;
+
     import App from "$lib/components/App";
     import Group from "$lib/components/Group";
 
@@ -280,7 +283,7 @@ async function getActiveForm(): Promise<any> {
     </div>
 
     <div class="header-item">
-      <span class="header-item-text-val" style="color: #ffcc00;">{app.uid == undefined ? "Loading Form..." : `v1.${app.uid}.${app.version}`}</span>
+      <span class="header-item-text-val" style="color: #ffcc00;">{app.uid == undefined ? "Loading Form..." : `v${VERSION}.${app.uid}.${app.version}`}</span>
     </div>
 
   </div>
