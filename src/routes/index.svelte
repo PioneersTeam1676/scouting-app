@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  const VERSION = 4;
+  const VERSION = 5;
 
     import App from "$lib/components/App";
     import Group from "$lib/components/Group";
