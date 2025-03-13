@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   import { Router, router } from "../.routify/instance.default.js";
-  import '@ionic/core/css/palettes/dark.always.css';
 
   /* Theme variables */
   // Use matchMedia to check the user preference
