@@ -69,7 +69,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: (url) => url.url.origin === "https://cdn.jsdeliver.net",
+            urlPattern: (url) => url.url.origin === "https://cdn.jsdelivr.net",
             handler: 'CacheFirst',
             options: {
               cacheName: 'bootstrap-styles',
