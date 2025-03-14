@@ -66,6 +66,24 @@ export default defineConfig({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
       injectRegister: 'inline',
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: (url) => url.url.origin === "https://cdn.jsdeliver.net",
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'bootstrap-styles',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      }
     }),
 
     svelte(),
