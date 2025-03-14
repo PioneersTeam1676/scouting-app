@@ -64,7 +64,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'favicon.ico', 'favicon.png','robots.txt', 'assets/*'],
       manifest: pwaManifest,
       strategies: 'generateSW',
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       injectRegister: 'inline',
       workbox: {
         runtimeCaching: [
