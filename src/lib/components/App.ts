@@ -199,7 +199,7 @@ export default class App {
                 if(implicit == "user_id") {
                     value = this.userId;
                 } else if(implicit == "comp") {
-                    value = "Robbinsville";
+                    value = "2025njwas";
                 } else if(implicit == "timestamp") {
                     value = Date.now();
                 } else if(implicit == "team_num") {
