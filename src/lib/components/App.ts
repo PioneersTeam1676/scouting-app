@@ -156,12 +156,14 @@ export default class App {
         // });
 
         let err = false;
+        let errInput = "";
         let submitted = -1;
 
         this.updateInputs((input) => {
 
             if(input.value == "undefined" || input.value == undefined) {
                 err = true;
+                errInput = input.questionText;
             }
 
             if(input.type == "toggle") {
@@ -183,7 +185,7 @@ export default class App {
             const options = {
                 header: 'Error Submitting!',
             //    subHeader: 'Subtitle',
-                message: `Fill out all form inputs before submiting!`,
+                message: `Fill out all form inputs before submiting! Fill out question ${errInput}`,
                 buttons: ['OK']
             };
       
