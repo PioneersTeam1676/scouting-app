@@ -11,7 +11,6 @@
 
     page.visible.subscribe((bool) => {
         visible = bool;
-        console.log(bool);
         page.sections = page.sections;
     });
 
@@ -22,7 +21,6 @@
         if(InputPage.app.userId == undefined) {
             disabled = true;
         } else if(page.hasEmptyInput(page)) {
-            console.log("ive got an emoty thing")
             disabled = true;
         } else {
             disabled = false;

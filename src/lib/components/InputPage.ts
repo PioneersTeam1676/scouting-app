@@ -56,14 +56,14 @@ export default class InputPage {
                 if(element instanceof Group) {
                     
                     for(let input of element.inputs) {
-                        if(input.value == "" && input.value !== 0 || input.value == "undefined" && input.value !== false) {
+                        if((input.value == "" && input.value !== 0 || input.value == "undefined" && input.value !== false) || input.value == null) {
                         // console.log(input.questionText)
                             return true;
                         }
                     }
 
                 } else {
-                    if((element.value == "undefined" || element.value == "") && element.value !== 0 && element.value !== false) {
+                    if(((element.value == "undefined" || element.value == "") && element.value !== 0 && element.value !== false) || element.value == null) {
                         // console.log(element.questionText)
                         return true;
                     }

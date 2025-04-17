@@ -164,6 +164,7 @@ export default class App {
             if(input.value == "undefined" || input.value == undefined) {
                 err = true;
                 errInput = input.questionText;
+                console.log(input.questionText + ", " + input.value + ", " + typeof input.value);
             }
 
             if(input.type == "toggle") {
