@@ -1,6 +1,6 @@
 <script lang="ts">
     import { InputGroup, InputGroupText, Input, Button } from "sveltestrap";
-import IncrementalNumberInput from "./IncrementalNumberInput";
+import IncrementalNumberInput from "../classes/IncrementalNumberInput";
     import HelpButton from "./HelpButton.svelte";
 
     

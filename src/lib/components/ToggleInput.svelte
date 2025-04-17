@@ -1,6 +1,6 @@
 <script lang="ts">
     import HelpButton from "./HelpButton.svelte";
-    import ToggleInput from "./ToggleInput";
+    import ToggleInput from "../classes/ToggleInput";
     import { Input } from "sveltestrap";
 
 

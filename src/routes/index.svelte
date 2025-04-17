@@ -2,23 +2,23 @@
 
   const VERSION = 17;
 
-    import App from "$lib/components/App";
-    import Group from "$lib/components/Group";
+    import App from "$lib/classes/App";
+    import Group from "$lib/classes/Group";
 
   // code here
 
     import HelpButton from "$lib/components/HelpButton.svelte";
-    import IncrementalNumberInput from "$lib/components/IncrementalNumberInput";
-    import Input from "$lib/components/Input";
-    import InputPage from "$lib/components/InputPage";
-    import InputSection from "$lib/components/InputSection";
-    import NumberInput from "$lib/components/NumberInput";
-    import PillBoxInput from "$lib/components/PillBoxInput";
-    import TextInput from "$lib/components/TextInput";
-    import ToggleInput from "$lib/components/ToggleInput";
+    import IncrementalNumberInput from "$lib/classes/IncrementalNumberInput";
+    import Input from "$lib/classes/Input";
+    import InputPage from "$lib/classes/InputPage";
+    import InputSection from "$lib/classes/InputSection";
+    import NumberInput from "$lib/classes/NumberInput";
+    import PillBoxInput from "$lib/classes/PillBoxInput";
+    import TextInput from "$lib/classes/TextInput";
+    import ToggleInput from "$lib/classes/ToggleInput";
     import { onMount } from "svelte";
     import { InputGroup, InputGroupText, Modal } from "sveltestrap";
-    import { InputPageButton } from "$lib/components/InputPage";
+    import { InputPageButton } from "$lib/classes/InputPage";
     import InputPageComp from "$lib/components/InputPage.svelte";
 
   type InputFromDB = {

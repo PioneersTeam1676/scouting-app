@@ -1,10 +1,10 @@
 <script lang=ts>
-    import Group from "./Group";
+    import Group from "../classes/Group";
     import GroupComp from "./Group.svelte";
 
     import HelpButton from "./HelpButton.svelte";
-    import Input from "./Input";
-    import InputSection from "./InputSection";
+    import Input from "../classes/Input";
+    import InputSection from "../classes/InputSection";
     import GenericInput from "./GenericInput.svelte";
 
     export let section: InputSection;

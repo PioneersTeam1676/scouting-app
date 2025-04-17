@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Input, InputGroup, InputGroupText } from "sveltestrap";
-import NumberInput from "./NumberInput";
+import NumberInput from "../classes/NumberInput";
     import HelpButton from "./HelpButton.svelte";
 
     export let input: NumberInput;
