@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Input, InputGroup, InputGroupText } from "sveltestrap";
-import TextInput from "./TextInput";
+import TextInput from "../classes/TextInput";
     import HelpButton from "./HelpButton.svelte";
 
     export let input: TextInput;

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import InputPage from "./InputPage";
+    import InputPage from "../classes/InputPage";
     import InputSection from "./InputSection.svelte";
-    import { InputPageButton } from "./InputPage"
+    import { InputPageButton } from "../classes/InputPage"
     import { Button, Input } from "sveltestrap";
 
 

@@ -1,23 +1,23 @@
 <script lang="ts">
 
-import Group from "./Group";
+import Group from "../classes/Group";
 
-    import Input from "./Input";
+    import Input from "../classes/Input";
 
 
-    import NumberInput from "./NumberInput";
+    import NumberInput from "../classes/NumberInput";
     import NumberInputComp from "./NumberInput.svelte";
 
-    import TextInput from "./TextInput";
+    import TextInput from "../classes/TextInput";
     import TextInputComp from "./TextInput.svelte";
 
-    import ToggleInput from "./ToggleInput";
+    import ToggleInput from "../classes/ToggleInput";
     import ToggleInputComp from "./ToggleInput.svelte";
 
     import IncrementalNumberInputComp from "./IncrementalNumberInput.svelte";
-    import IncrementalNumberInput from "./IncrementalNumberInput";
+    import IncrementalNumberInput from "../classes/IncrementalNumberInput";
 
-    import PillBoxInput from "./PillBoxInput";
+    import PillBoxInput from "../classes/PillBoxInput";
     import PillBoxInputComp from "./PillBoxInput.svelte";
 
     export let input: Input;

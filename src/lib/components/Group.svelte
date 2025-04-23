@@ -1,6 +1,6 @@
 <script lang="ts">
     import GenericInput from "./GenericInput.svelte";
-    import Group from "./Group";
+    import Group from "../classes/Group";
     import HelpButton from "./HelpButton.svelte";
 
 

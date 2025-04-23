@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ListGroupItem, ListGroup } from "sveltestrap";
-    import PillBoxInput from "./PillBoxInput";
+    import PillBoxInput from "../classes/PillBoxInput";
     import HelpButton from "./HelpButton.svelte";
 
 
