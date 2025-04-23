@@ -12,3 +12,7 @@ order of people to ask if smth breaks:
 4. team members- someone might know what ur problem is, ask them
 5. larry- sorry larry
 6. me(dylan)- if all else fails you can email me or smth(dylanbarrett360@gmail.com) but only if everything else reallly fails and dont tell anyone else that i am available to fix stuff its only for this app. defintly not for aceit dont ask me to fix aceit.
+
+just thought of more stuff to put in here- stuff to do!
+1. fix the fact that a question being "required" dosent actually do anything and all the questions are required
+2. make it so that when a new version of the app is put onto the server it prompts the user to update the app and wont let them use the old version
